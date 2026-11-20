@@ -1,0 +1,36 @@
+import Application from "../models/Application.js";
+// ==============================
+// Create Application
+// ==============================
+export const createApplication = async (req, res) => {
+    try {
+        // Application.create(req.body) takes the JSON data sent in the request, creates a MongoDB document using the Mongoose model, and saves it to the database
+        const application = await Application.create(req.body);
+        res.status(201).json({
+            message: "Application created successfully",
+            application
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            message: "Failed to create application",
+            error: error.message
+        });
+    }
+};
+
+//===========================
+// Get All Applications
+// ==========================
+export const getApplications = async (req, res) =>{
+    try {
+        const application = await Application.find().sort({createdAt: -1});
+        res.status(200).json(application);
+
+    } catch (error) {
+        res.status(500).json({
+            message: "Failed to fetch appliations",
+            error: error.message
+        });
+    }
+};

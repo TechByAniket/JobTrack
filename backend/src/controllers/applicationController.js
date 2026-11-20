@@ -38,10 +38,14 @@ export const getApplications = async (req, res) =>{
 // ==========================
 // Edit Application
 // ==========================
-export const updateApplication = async (req, res) =>{
+
+export const updateApplication = async (req, res) => {
+
     try {
+        console.log("Updating application in MongoDB...");
+
         const application = await Application.findByIdAndUpdate(
-            req.param.id,
+            req.params.id,
             req.body,
             {
                 new: true,
@@ -49,21 +53,27 @@ export const updateApplication = async (req, res) =>{
             }
         );
 
-        if(!application){
+        if (!application) {
             return res.status(404).json({
-                message:"Application not found"
+                message: "Application not found"
             });
         }
 
-        res.status(200).json({
-            message:"Application updated successfully",
+        return res.status(200).json({
+            message: "Application updated successfully",
             application
         });
 
     } catch (error) {
-        
+        console.error("Update Error:", error);
+
+        return res.status(500).json({
+            message: "Failed to update application",
+            error: error.message
+        });
     }
 };
+
 
 // ============================
 // Delete Application by ID

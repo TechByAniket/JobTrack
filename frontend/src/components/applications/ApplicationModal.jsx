@@ -1,17 +1,40 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { X } from "lucide-react";
 
-function ApplicationModal({ isOpen, onClose, onSubmit }) {
-  const [formData, setFormData] = useState({
-    company: "",
-    role: "",
-    location: "",
-    jobType: "Full-time",
-    status: "Applied",
-    appliedDate: new Date().toISOString().split("T")[0],
-    jobUrl: "",
-  });
+const initialFormData = {
+  company: "",
+  role: "",
+  location: "",
+  jobType: "Full-time",
+  status: "Applied",
+  appliedDate: new Date().toISOString().split("T")[0],
+  jobUrl: "",
+};
+
+function ApplicationModal({ isOpen, onClose, onSubmit, application }) {
+  const [formData, setFormData] = useState(initialFormData);
+
+  useEffect(() => {
+    if (application) {
+      setFormData({
+        company: application.company || "",
+        role: application.role || "",
+        location: application.location || "",
+        jobType: application.jobType || "Full-time",
+        status: application.status || "Applied",
+        appliedDate: application.appliedDate
+          ? new Date(application.appliedDate).toISOString().split("T")[0]
+          : new Date().toISOString().split("T")[0],
+        jobUrl: application.jobUrl || "",
+      });
+    } else {
+      setFormData({
+        ...initialFormData,
+        appliedDate: new Date().toISOString().split("T")[0],
+      });
+    }
+  }, [application, isOpen]);
 
   if (!isOpen) return null;
 
@@ -35,10 +58,12 @@ function ApplicationModal({ isOpen, onClose, onSubmit }) {
         <div className="flex items-center justify-between border-b border-slate-200 px-6 py-4">
           <div>
             <h2 className="text-lg font-semibold text-slate-900">
-              Add Application
+              {application ? "Edit Application" : "Add Application"}
             </h2>
             <p className="mt-1 text-sm text-slate-500">
-              Enter the details of your job application.
+              {application
+                ? "Update your application details."
+                : "Enter the details of your job application."}
             </p>
           </div>
 
@@ -172,7 +197,7 @@ function ApplicationModal({ isOpen, onClose, onSubmit }) {
               type="submit"
               className="rounded-lg bg-orange-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-orange-700"
             >
-              Save Application
+              {application ? "Update Application" : "Save Application"}
             </button>
           </div>
         </form>

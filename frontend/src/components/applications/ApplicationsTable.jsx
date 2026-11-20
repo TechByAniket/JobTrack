@@ -4,7 +4,7 @@ import { Pencil, Trash2 } from "lucide-react";
 import StatusBadge from "./StatusBadge";
 import SearchFilter from "./SearchFilter";
 
-function ApplicationsTable({ applications }) {
+function ApplicationsTable({ applications, onEdit }) {
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState("All");
 
@@ -119,8 +119,12 @@ function ApplicationsTable({ applications }) {
 
                 <td className="px-6 py-4">
                   <div className="flex items-center justify-end gap-2">
-                    <button className="p-2 rounded-lg text-slate-500 hover:text-blue-600 hover:bg-blue-50 transition">
-                      <Pencil size={16} />
+                    <button
+                        onClick={() => onEdit(application)}
+                        title="Edit application"
+                        className="p-2 rounded-lg text-slate-500 hover:text-blue-600 hover:bg-blue-50 transition"
+                        >
+                        <Pencil size={16} />
                     </button>
 
                     <button className="p-2 rounded-lg text-slate-500 hover:text-red-600 hover:bg-red-50 transition">

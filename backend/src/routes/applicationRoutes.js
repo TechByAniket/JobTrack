@@ -1,5 +1,5 @@
 import express from "express";
-import { createApplication, getApplications } from "../controllers/applicationController.js";
+import { createApplication, deleteApplication, getApplications, updateApplication } from "../controllers/applicationController.js";
 
 const router = express.Router();
 
@@ -9,5 +9,10 @@ router.post("/", createApplication);
 // 2. Get All Applications
 router.get("/", getApplications);
 
+// 3. Update Application
+router.put("/:id", updateApplication);
+
+//4. Delete Application
+router.delete("/:id", deleteApplication);
 
 export default router;

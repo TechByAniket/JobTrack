@@ -1,60 +1,34 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Pencil, Trash2 } from "lucide-react";
 import StatusBadge from "./StatusBadge";
 import SearchFilter from "./SearchFilter";
-
-const applications = [
-  {
-    id: 1,
-    company: "Google",
-    role: "Software Engineer Intern",
-    location: "Bengaluru",
-    jobType: "Internship",
-    appliedDate: "Nov 20, 2026",
-    status: "Interview",
-  },
-  {
-    id: 2,
-    company: "Microsoft",
-    role: "Software Development Engineer",
-    location: "Hyderabad",
-    jobType: "Full-time",
-    appliedDate: "Nov 18, 2026",
-    status: "Applied",
-  },
-  {
-    id: 3,
-    company: "Amazon",
-    role: "SDE Intern",
-    location: "Bengaluru",
-    jobType: "Internship",
-    appliedDate: "Nov 15, 2026",
-    status: "Assessment",
-  },
-  {
-    id: 4,
-    company: "TCS",
-    role: "Assistant System Engineer",
-    location: "Mumbai",
-    jobType: "Full-time",
-    appliedDate: "Nov 12, 2026",
-    status: "Rejected",
-  },
-  {
-    id: 5,
-    company: "Flipkart",
-    role: "Software Development Intern",
-    location: "Bengaluru",
-    jobType: "Internship",
-    appliedDate: "Nov 10, 2026",
-    status: "Offer",
-  },
-];
+import { getApplications } from "../../services/applicationService";
 
 function ApplicationsTable() {
+  const [applications, setApplications] = useState([]);
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState("All");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
+  // Fetch applications when component mounts
+  useEffect(() => {
+    const fetchApplications = async () => {
+      try {
+        const data = await getApplications();
+        setApplications(data);
+      } catch (error) {
+        console.error("Failed to fetch applications:", error);
+        setError("Unable to load applications. Please try again.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchApplications();
+  }, []);
+
+  // Search and filter logic
   const filteredApplications = applications.filter((application) => {
     const matchesSearch =
       application.company.toLowerCase().includes(search.toLowerCase()) ||
@@ -66,6 +40,14 @@ function ApplicationsTable() {
     return matchesSearch && matchesStatus;
   });
 
+  const formatDate = (date) => {
+    return new Date(date).toLocaleDateString("en-IN", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    });
+  };
+
   return (
     <div className="bg-white border border-slate-200 rounded-xl overflow-hidden">
 
@@ -76,7 +58,6 @@ function ApplicationsTable() {
             <h2 className="text-base font-semibold text-slate-900">
               Recent Applications
             </h2>
-
             <p className="text-sm text-slate-500 mt-1">
               Track the status of your job applications
             </p>
@@ -112,8 +93,24 @@ function ApplicationsTable() {
 
           <tbody className="divide-y divide-slate-100">
 
-            {filteredApplications.map((application) => (
-              <tr key={application.id} className="hover:bg-slate-50 transition">
+            {loading && (
+              <tr>
+                <td colSpan="6" className="px-6 py-12 text-center text-sm text-slate-500">
+                  Loading applications...
+                </td>
+              </tr>
+            )}
+
+            {!loading && error && (
+              <tr>
+                <td colSpan="6" className="px-6 py-12 text-center text-sm text-red-500">
+                  {error}
+                </td>
+              </tr>
+            )}
+
+            {!loading && !error && filteredApplications.map((application) => (
+              <tr key={application._id} className="hover:bg-slate-50 transition">
 
                 <td className="px-6 py-4">
                   <div className="flex items-center gap-3">
@@ -125,7 +122,6 @@ function ApplicationsTable() {
                       <p className="text-sm font-medium text-slate-900">
                         {application.company}
                       </p>
-
                       <p className="text-xs text-slate-500 mt-1">
                         {application.role}
                       </p>
@@ -133,11 +129,17 @@ function ApplicationsTable() {
                   </div>
                 </td>
 
-                <td className="px-6 py-4 text-sm text-slate-600">{application.location}</td>
+                <td className="px-6 py-4 text-sm text-slate-600">
+                  {application.location}
+                </td>
 
-                <td className="px-6 py-4 text-sm text-slate-600">{application.jobType}</td>
+                <td className="px-6 py-4 text-sm text-slate-600">
+                  {application.jobType}
+                </td>
 
-                <td className="px-6 py-4 text-sm text-slate-600 whitespace-nowrap">{application.appliedDate}</td>
+                <td className="px-6 py-4 text-sm text-slate-600 whitespace-nowrap">
+                  {formatDate(application.appliedDate)}
+                </td>
 
                 <td className="px-6 py-4">
                   <StatusBadge status={application.status} />
@@ -158,8 +160,7 @@ function ApplicationsTable() {
               </tr>
             ))}
 
-            {/* Empty State */}
-            {filteredApplications.length === 0 && (
+            {!loading && !error && filteredApplications.length === 0 && (
               <tr>
                 <td colSpan="6" className="px-6 py-12 text-center">
                   <p className="text-sm font-medium text-slate-600">

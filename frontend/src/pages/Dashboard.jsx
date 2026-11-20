@@ -2,6 +2,7 @@ import Sidebar from "../components/layout/Sidebar";
 import Header from "../components/layout/Header";
 import WelcomeSection from "../components/dashboard/WelcomeSection";
 import StatsSection from "../components/dashboard/StatsSection";
+import ApplicationsTable from "../components/applications/ApplicationsTable";
 
 function Dashboard() {
   return (
@@ -18,6 +19,7 @@ function Dashboard() {
         <div className="p-8">
           <WelcomeSection />
           <StatsSection />
+          <ApplicationsTable />
 
           {/* Dashboard content will be added here */}
         </div>

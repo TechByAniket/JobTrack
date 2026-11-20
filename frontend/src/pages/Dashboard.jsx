@@ -12,6 +12,7 @@ import {
   getApplications,
   createApplication,
   updateApplication,
+  deleteApplication,
 } from "../services/applicationService";
 
 function Dashboard() {
@@ -71,6 +72,25 @@ function Dashboard() {
     }
   };
 
+  const handleDeleteApplication = async (id) => {
+    const confirmed = window.confirm(
+        "Are you sure you want to delete this application?"
+    );
+
+    if (!confirmed) return;
+
+    try {
+        await deleteApplication(id);
+
+        setApplications((prev) =>
+        prev.filter((app) => app._id !== id)
+        );
+    } catch (error) {
+        console.error("Failed to delete application:", error);
+        alert("Failed to delete application. Please try again.");
+    }
+  };
+
   const openAddModal = () => {
     setSelectedApplication(null);
     setIsModalOpen(true);
@@ -103,6 +123,7 @@ function Dashboard() {
           <ApplicationsTable
             applications={applications}
             onEdit={openEditModal}
+            onDelete={handleDeleteApplication}
           />
         </div>
       </main>

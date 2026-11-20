@@ -4,7 +4,7 @@ import { Pencil, Trash2 } from "lucide-react";
 import StatusBadge from "./StatusBadge";
 import SearchFilter from "./SearchFilter";
 
-function ApplicationsTable({ applications, onEdit }) {
+function ApplicationsTable({ applications, onEdit, onDelete }) {
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState("All");
 
@@ -127,8 +127,12 @@ function ApplicationsTable({ applications, onEdit }) {
                         <Pencil size={16} />
                     </button>
 
-                    <button className="p-2 rounded-lg text-slate-500 hover:text-red-600 hover:bg-red-50 transition">
-                      <Trash2 size={16} />
+                    <button
+                        onClick={() => onDelete(application._id)}
+                        title="Delete application"
+                        className="p-2 rounded-lg text-slate-500 hover:text-red-600 hover:bg-red-50 transition"
+                        >
+                        <Trash2 size={16} />
                     </button>
                   </div>
                 </td>

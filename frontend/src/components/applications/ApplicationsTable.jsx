@@ -1,34 +1,13 @@
-import { useState, useEffect } from "react";
+
+import { useState } from "react";
 import { Pencil, Trash2 } from "lucide-react";
 import StatusBadge from "./StatusBadge";
 import SearchFilter from "./SearchFilter";
-import { getApplications } from "../../services/applicationService";
 
-function ApplicationsTable() {
-  const [applications, setApplications] = useState([]);
+function ApplicationsTable({ applications }) {
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState("All");
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
 
-  // Fetch applications when component mounts
-  useEffect(() => {
-    const fetchApplications = async () => {
-      try {
-        const data = await getApplications();
-        setApplications(data);
-      } catch (error) {
-        console.error("Failed to fetch applications:", error);
-        setError("Unable to load applications. Please try again.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchApplications();
-  }, []);
-
-  // Search and filter logic
   const filteredApplications = applications.filter((application) => {
     const matchesSearch =
       application.company.toLowerCase().includes(search.toLowerCase()) ||
@@ -50,8 +29,6 @@ function ApplicationsTable() {
 
   return (
     <div className="bg-white border border-slate-200 rounded-xl overflow-hidden">
-
-      {/* Table Header */}
       <div className="px-6 py-5 border-b border-slate-200">
         <div className="flex items-center justify-between mb-4">
           <div>
@@ -76,42 +53,37 @@ function ApplicationsTable() {
         />
       </div>
 
-      {/* Table */}
       <div className="overflow-x-auto">
         <table className="w-full text-left">
-
           <thead className="bg-slate-50 border-b border-slate-200">
             <tr>
-              <th className="px-6 py-3 text-xs font-medium text-slate-500 uppercase">Company / Role</th>
-              <th className="px-6 py-3 text-xs font-medium text-slate-500 uppercase">Location</th>
-              <th className="px-6 py-3 text-xs font-medium text-slate-500 uppercase">Type</th>
-              <th className="px-6 py-3 text-xs font-medium text-slate-500 uppercase">Applied Date</th>
-              <th className="px-6 py-3 text-xs font-medium text-slate-500 uppercase">Status</th>
-              <th className="px-6 py-3 text-xs font-medium text-slate-500 uppercase text-right">Actions</th>
+              <th className="px-6 py-3 text-xs font-medium text-slate-500 uppercase">
+                Company / Role
+              </th>
+              <th className="px-6 py-3 text-xs font-medium text-slate-500 uppercase">
+                Location
+              </th>
+              <th className="px-6 py-3 text-xs font-medium text-slate-500 uppercase">
+                Type
+              </th>
+              <th className="px-6 py-3 text-xs font-medium text-slate-500 uppercase">
+                Applied Date
+              </th>
+              <th className="px-6 py-3 text-xs font-medium text-slate-500 uppercase">
+                Status
+              </th>
+              <th className="px-6 py-3 text-xs font-medium text-slate-500 uppercase text-right">
+                Actions
+              </th>
             </tr>
           </thead>
 
           <tbody className="divide-y divide-slate-100">
-
-            {loading && (
-              <tr>
-                <td colSpan="6" className="px-6 py-12 text-center text-sm text-slate-500">
-                  Loading applications...
-                </td>
-              </tr>
-            )}
-
-            {!loading && error && (
-              <tr>
-                <td colSpan="6" className="px-6 py-12 text-center text-sm text-red-500">
-                  {error}
-                </td>
-              </tr>
-            )}
-
-            {!loading && !error && filteredApplications.map((application) => (
-              <tr key={application._id} className="hover:bg-slate-50 transition">
-
+            {filteredApplications.map((application) => (
+              <tr
+                key={application._id}
+                className="hover:bg-slate-50 transition"
+              >
                 <td className="px-6 py-4">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-lg bg-orange-50 text-orange-600 flex items-center justify-center font-semibold text-sm">
@@ -156,11 +128,10 @@ function ApplicationsTable() {
                     </button>
                   </div>
                 </td>
-
               </tr>
             ))}
 
-            {!loading && !error && filteredApplications.length === 0 && (
+            {filteredApplications.length === 0 && (
               <tr>
                 <td colSpan="6" className="px-6 py-12 text-center">
                   <p className="text-sm font-medium text-slate-600">
@@ -172,11 +143,9 @@ function ApplicationsTable() {
                 </td>
               </tr>
             )}
-
           </tbody>
         </table>
       </div>
-
     </div>
   );
 }

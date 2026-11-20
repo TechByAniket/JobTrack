@@ -9,4 +9,9 @@ export const getApplications = async () => {
   return response.data;
 };
 
+export const createApplication = async (data) => {
+  const response = await API.post("/applications", data);
+  return response.data;
+};
+
 export default API;

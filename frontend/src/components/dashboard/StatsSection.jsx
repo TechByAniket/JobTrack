@@ -1,28 +1,29 @@
+
 import StatCard from "./StatCard";
 
-function StatsSection() {
+function StatsSection({ applications }) {
   const stats = [
     {
       title: "Total Applications",
-      value: 0,
+      value: applications.length,
       description: "All tracked applications",
       type: "total",
     },
     {
       title: "Applied",
-      value: 0,
+      value: applications.filter((app) => app.status === "Applied").length,
       description: "Applications submitted",
       type: "applied",
     },
     {
       title: "Interviews",
-      value: 0,
+      value: applications.filter((app) => app.status === "Interview").length,
       description: "Interview opportunities",
       type: "interview",
     },
     {
       title: "Offers",
-      value: 0,
+      value: applications.filter((app) => app.status === "Offer").length,
       description: "Offers received",
       type: "offer",
     },

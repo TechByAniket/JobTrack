@@ -1,6 +1,7 @@
 import Sidebar from "../components/layout/Sidebar";
 import Header from "../components/layout/Header";
 import WelcomeSection from "../components/dashboard/WelcomeSection";
+import StatsSection from "../components/dashboard/StatsSection";
 
 function Dashboard() {
   return (
@@ -16,6 +17,7 @@ function Dashboard() {
 
         <div className="p-8">
           <WelcomeSection />
+          <StatsSection />
 
           {/* Dashboard content will be added here */}
         </div>

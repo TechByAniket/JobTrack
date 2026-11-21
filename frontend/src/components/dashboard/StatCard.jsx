@@ -23,26 +23,24 @@ function StatCard({ title, value, description, type }) {
   const Icon = iconMap[type];
 
   return (
-    <div className="bg-white border border-slate-200 rounded-xl p-5 hover:shadow-sm transition">
-
-      <div className="flex items-center justify-between mb-4">
-        <p className="text-sm font-medium text-slate-500">
+    <div className="bg-white border border-slate-200/80 rounded-xl p-4 hover:border-slate-300 hover:shadow-xs transition">
+      <div className="flex items-center justify-between mb-2.5">
+        <p className="text-xs font-medium text-slate-500">
           {title}
         </p>
 
-        <div className={`p-2 rounded-lg ${colorMap[type]}`}>
-          <Icon size={19} />
+        <div className={`p-1.5 rounded-lg ${colorMap[type]}`}>
+          <Icon size={16} />
         </div>
       </div>
 
-      <h3 className="text-3xl font-bold text-slate-900">
+      <h3 className="text-2xl font-bold text-slate-900">
         {value}
       </h3>
 
-      <p className="text-xs text-slate-500 mt-2">
+      <p className="text-[11px] text-slate-400 mt-1">
         {description}
       </p>
-
     </div>
   );
 }

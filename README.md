@@ -1,6 +1,7 @@
 ﻿# 💼 JobTrack - Job Application Tracker
 
- [VIDEO DEMO](https://drive.google.com/file/d/1Gj7uh_5sH8XjjzOUDLm87pIK6Rkupbir/view?usp=sharing)
+ [Video Demo](https://drive.google.com/file/d/1Gj7uh_5sH8XjjzOUDLm87pIK6Rkupbir/view?usp=sharing)
+ 
 A modern, fast, and responsive full-stack web application designed to help job seekers track, organize, and manage their job applications throughout the recruitment lifecycle.
 
 ---

@@ -1,12 +1,12 @@
 
 import { useState, useEffect } from "react";
 
-import Sidebar from "../components/layout/Sidebar";
 import Header from "../components/layout/Header";
 import WelcomeSection from "../components/dashboard/WelcomeSection";
 import StatsSection from "../components/dashboard/StatsSection";
 import ApplicationsTable from "../components/applications/ApplicationsTable";
 import ApplicationModal from "../components/applications/ApplicationModal";
+import Toast from "../components/common/Toast";
 
 import {
   getApplications,
@@ -19,7 +19,7 @@ function Dashboard() {
   const [applications, setApplications] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedApplication, setSelectedApplication] = useState(null);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [toast, setToast] = useState(null);
 
   useEffect(() => {
     const fetchApplications = async () => {
@@ -28,25 +28,27 @@ function Dashboard() {
         setApplications(data);
       } catch (error) {
         console.error("Failed to fetch applications:", error);
+        showToast("Failed to load applications.", "error");
       }
     };
 
     fetchApplications();
   }, []);
 
+  const showToast = (message, type = "success") => {
+    setToast({ message, type });
+  };
+
   const handleAddApplication = async (formData) => {
     try {
       const data = await createApplication(formData);
 
-      setApplications((prev) => [
-        data.application,
-        ...prev,
-      ]);
-
+      setApplications((prev) => [data.application, ...prev]);
       setIsModalOpen(false);
+      showToast("Application added successfully!");
     } catch (error) {
       console.error("Failed to create application:", error);
-      alert("Failed to save application. Please try again.");
+      showToast("Failed to save application. Please try again.", "error");
     }
   };
 
@@ -67,28 +69,31 @@ function Dashboard() {
 
       setIsModalOpen(false);
       setSelectedApplication(null);
+      showToast("Application updated successfully!");
     } catch (error) {
       console.error("Failed to update application:", error);
-      alert("Failed to update application. Please try again.");
+      showToast("Failed to update application. Please try again.", "error");
     }
   };
 
   const handleDeleteApplication = async (id) => {
     const confirmed = window.confirm(
-        "Are you sure you want to delete this application?"
+      "Are you sure you want to delete this application?"
     );
 
     if (!confirmed) return;
 
     try {
-        await deleteApplication(id);
+      await deleteApplication(id);
 
-        setApplications((prev) =>
+      setApplications((prev) =>
         prev.filter((app) => app._id !== id)
-        );
+      );
+
+      showToast("Application deleted successfully!");
     } catch (error) {
-        console.error("Failed to delete application:", error);
-        alert("Failed to delete application. Please try again.");
+      console.error("Failed to delete application:", error);
+      showToast("Failed to delete application. Please try again.", "error");
     }
   };
 
@@ -111,19 +116,11 @@ function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      <Sidebar
-        isOpen={isSidebarOpen}
-        onClose={() => setIsSidebarOpen(false)}
-      />
+    <div className="min-h-screen bg-slate-50 flex flex-col">
+      <Header onAddClick={openAddModal} />
 
-      <main className="lg:ml-64 min-h-screen flex flex-col">
-        <Header
-          onAddClick={openAddModal}
-          onMenuClick={() => setIsSidebarOpen(true)}
-        />
-
-        <div className="p-4 sm:p-6 lg:p-8 flex-1">
+      <main className="w-full flex-1">
+        <div className="p-4 sm:p-6 lg:p-8">
           <WelcomeSection />
           <StatsSection applications={applications} />
 
@@ -134,6 +131,16 @@ function Dashboard() {
           />
         </div>
       </main>
+
+      {toast && (
+        <div className="fixed right-5 top-5 z-[100] w-[calc(100%-2.5rem)] max-w-sm">
+          <Toast
+            message={toast.message}
+            type={toast.type}
+            onClose={() => setToast(null)}
+          />
+        </div>
+      )}
 
       <ApplicationModal
         isOpen={isModalOpen}

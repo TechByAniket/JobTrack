@@ -149,7 +149,7 @@ function ApplicationModal({ isOpen, onClose, onSubmit, application }) {
                 className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm outline-none focus:border-orange-500"
               >
                 <option>Applied</option>
-                <option>Assessment</option>
+                <option>Withdrawn</option>
                 <option>Interview</option>
                 <option>Offer</option>
                 <option>Rejected</option>

@@ -53,26 +53,26 @@ function ApplicationsTable({ applications, onEdit, onDelete }) {
         />
       </div>
 
-      <div className="overflow-x-auto">
+      <div className="overflow-auto max-h-[500px]">
         <table className="w-full text-left min-w-[720px]">
-          <thead className="bg-slate-50 border-b border-slate-200">
+          <thead className="bg-slate-50 border-b border-slate-200 sticky top-0 z-10 shadow-xs">
             <tr>
-              <th className="px-6 py-3 text-xs font-medium text-slate-500 uppercase">
+              <th className="px-6 py-3 text-xs font-medium text-slate-500 uppercase bg-slate-50">
                 Company / Role
               </th>
-              <th className="px-6 py-3 text-xs font-medium text-slate-500 uppercase">
+              <th className="px-6 py-3 text-xs font-medium text-slate-500 uppercase bg-slate-50">
                 Location
               </th>
-              <th className="px-6 py-3 text-xs font-medium text-slate-500 uppercase">
+              <th className="px-6 py-3 text-xs font-medium text-slate-500 uppercase bg-slate-50">
                 Type
               </th>
-              <th className="px-6 py-3 text-xs font-medium text-slate-500 uppercase">
+              <th className="px-6 py-3 text-xs font-medium text-slate-500 uppercase bg-slate-50">
                 Applied Date
               </th>
-              <th className="px-6 py-3 text-xs font-medium text-slate-500 uppercase">
+              <th className="px-6 py-3 text-xs font-medium text-slate-500 uppercase bg-slate-50">
                 Status
               </th>
-              <th className="px-6 py-3 text-xs font-medium text-slate-500 uppercase text-right">
+              <th className="px-6 py-3 text-xs font-medium text-slate-500 uppercase text-right bg-slate-50">
                 Actions
               </th>
             </tr>
@@ -120,19 +120,19 @@ function ApplicationsTable({ applications, onEdit, onDelete }) {
                 <td className="px-6 py-4">
                   <div className="flex items-center justify-end gap-2">
                     <button
-                        onClick={() => onEdit(application)}
-                        title="Edit application"
-                        className="p-2 rounded-lg text-slate-500 hover:text-blue-600 hover:bg-blue-50 transition"
-                        >
-                        <Pencil size={16} />
+                      onClick={() => onEdit(application)}
+                      title="Edit application"
+                      className="p-2 rounded-lg text-slate-500 hover:text-blue-600 hover:bg-blue-50 transition"
+                    >
+                      <Pencil size={16} />
                     </button>
 
                     <button
-                        onClick={() => onDelete(application._id)}
-                        title="Delete application"
-                        className="p-2 rounded-lg text-slate-500 hover:text-red-600 hover:bg-red-50 transition"
-                        >
-                        <Trash2 size={16} />
+                      onClick={() => onDelete(application._id)}
+                      title="Delete application"
+                      className="p-2 rounded-lg text-slate-500 hover:text-red-600 hover:bg-red-50 transition"
+                    >
+                      <Trash2 size={16} />
                     </button>
                   </div>
                 </td>

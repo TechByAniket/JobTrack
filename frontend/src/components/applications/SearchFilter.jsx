@@ -2,7 +2,7 @@ import { Search, SlidersHorizontal } from "lucide-react";
 
 function SearchFilter({ search, setSearch, status, setStatus }) {
   return (
-    <div className="flex flex-col sm:flex-row gap-3 mb-5">
+    <div className="flex flex-col sm:flex-row gap-3">
 
       {/* Search */}
       <div className="relative flex-1">

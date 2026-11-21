@@ -3,22 +3,45 @@ import {
   BriefcaseBusiness,
   Settings,
   ChevronDown,
+  X,
 } from "lucide-react";
 
-function Sidebar() {
+function Sidebar({ isOpen, onClose }) {
   return (
-    <aside className="w-64 bg-slate-900 text-white flex flex-col fixed inset-y-0 left-0">
+    <>
+      {/* Mobile backdrop */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-slate-900/50 backdrop-blur-xs lg:hidden"
+          onClick={onClose}
+        />
+      )}
 
-      {/* Branding */}
-      <div className="px-6 py-6 border-b border-slate-800">
-        <h1 className="text-2xl font-bold tracking-tight">
-          Job<span className="text-orange-500">Track</span>
-        </h1>
+      <aside
+        className={`w-64 bg-slate-900 text-white flex flex-col fixed inset-y-0 left-0 z-50 transition-transform duration-200 ease-in-out ${
+          isOpen ? "translate-x-0" : "-translate-x-full"
+        } lg:translate-x-0`}
+      >
+        {/* Branding */}
+        <div className="px-6 py-6 border-b border-slate-800 flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-bold tracking-tight">
+              Job<span className="text-orange-500">Track</span>
+            </h1>
 
-        <p className="text-xs text-slate-400 mt-1">
-          Career management workspace
-        </p>
-      </div>
+            <p className="text-xs text-slate-400 mt-1">
+              Career management workspace
+            </p>
+          </div>
+
+          <button
+            onClick={onClose}
+            className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 lg:hidden transition"
+            aria-label="Close sidebar"
+          >
+            <X size={20} />
+          </button>
+        </div>
 
       {/* Navigation */}
       <nav className="px-4 py-6 space-y-2">
@@ -59,6 +82,7 @@ function Sidebar() {
       </div>
 
     </aside>
+    </>
   );
 }
 

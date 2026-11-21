@@ -19,6 +19,7 @@ function Dashboard() {
   const [applications, setApplications] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedApplication, setSelectedApplication] = useState(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
     const fetchApplications = async () => {
@@ -111,12 +112,18 @@ function Dashboard() {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <Sidebar />
+      <Sidebar
+        isOpen={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
+      />
 
-      <main className="ml-64 min-h-screen">
-        <Header onAddClick={openAddModal} />
+      <main className="lg:ml-64 min-h-screen flex flex-col">
+        <Header
+          onAddClick={openAddModal}
+          onMenuClick={() => setIsSidebarOpen(true)}
+        />
 
-        <div className="p-8">
+        <div className="p-4 sm:p-6 lg:p-8 flex-1">
           <WelcomeSection />
           <StatsSection applications={applications} />
 

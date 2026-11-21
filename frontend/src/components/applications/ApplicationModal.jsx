@@ -53,9 +53,9 @@ function ApplicationModal({ isOpen, onClose, onSubmit, application }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4">
-      <div className="w-full max-w-lg rounded-2xl bg-white shadow-xl">
-        <div className="flex items-center justify-between border-b border-slate-200 px-6 py-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4 overflow-y-auto">
+      <div className="w-full max-w-lg rounded-2xl bg-white shadow-xl max-h-[90vh] flex flex-col my-auto">
+        <div className="flex items-center justify-between border-b border-slate-200 px-4 sm:px-6 py-4 shrink-0">
           <div>
             <h2 className="text-lg font-semibold text-slate-900">
               {application ? "Edit Application" : "Add Application"}
@@ -76,7 +76,7 @@ function ApplicationModal({ isOpen, onClose, onSubmit, application }) {
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4 p-6">
+        <form onSubmit={handleSubmit} className="space-y-4 p-4 sm:p-6 overflow-y-auto">
           <div>
             <label className="mb-1 block text-sm font-medium text-slate-700">
               Company *
@@ -105,7 +105,7 @@ function ApplicationModal({ isOpen, onClose, onSubmit, application }) {
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="mb-1 block text-sm font-medium text-slate-700">
                 Location
@@ -137,7 +137,7 @@ function ApplicationModal({ isOpen, onClose, onSubmit, application }) {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="mb-1 block text-sm font-medium text-slate-700">
                 Status
@@ -184,18 +184,18 @@ function ApplicationModal({ isOpen, onClose, onSubmit, application }) {
             />
           </div>
 
-          <div className="flex justify-end gap-3 border-t border-slate-200 pt-4">
+          <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-3 border-t border-slate-200 pt-4">
             <button
               type="button"
               onClick={onClose}
-              className="rounded-lg border border-slate-300 px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50"
+              className="w-full sm:w-auto rounded-lg border border-slate-300 px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 text-center"
             >
               Cancel
             </button>
 
             <button
               type="submit"
-              className="rounded-lg bg-orange-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-orange-700"
+              className="w-full sm:w-auto rounded-lg bg-orange-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-orange-700 text-center"
             >
               {application ? "Update Application" : "Save Application"}
             </button>

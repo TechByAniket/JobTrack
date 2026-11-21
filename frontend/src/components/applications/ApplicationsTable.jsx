@@ -29,18 +29,18 @@ function ApplicationsTable({ applications, onEdit, onDelete }) {
 
   return (
     <div className="bg-white border border-slate-200 rounded-xl overflow-hidden">
-      <div className="px-6 py-5 border-b border-slate-200">
-        <div className="flex items-center justify-between mb-4">
+      <div className="p-4 sm:p-6 border-b border-slate-200">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
           <div>
             <h2 className="text-base font-semibold text-slate-900">
               Recent Applications
             </h2>
-            <p className="text-sm text-slate-500 mt-1">
+            <p className="text-xs sm:text-sm text-slate-500 mt-0.5 sm:mt-1">
               Track the status of your job applications
             </p>
           </div>
 
-          <span className="text-sm text-slate-500">
+          <span className="text-xs sm:text-sm text-slate-500 self-start sm:self-auto">
             {filteredApplications.length} applications
           </span>
         </div>
@@ -54,7 +54,7 @@ function ApplicationsTable({ applications, onEdit, onDelete }) {
       </div>
 
       <div className="overflow-x-auto">
-        <table className="w-full text-left">
+        <table className="w-full text-left min-w-[720px]">
           <thead className="bg-slate-50 border-b border-slate-200">
             <tr>
               <th className="px-6 py-3 text-xs font-medium text-slate-500 uppercase">

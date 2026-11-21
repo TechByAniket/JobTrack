@@ -5,6 +5,7 @@ function Header({ onAddClick }) {
   return (
     <header className="h-14 sm:h-16 bg-white/95 backdrop-blur-sm border-b border-slate-200/80 px-4 sm:px-6 lg:px-8 flex items-center justify-between sticky top-0 z-20">
       <div className="flex items-center gap-2.5">
+        <img src="/logo.avif" alt="JobTrack" className="w-6 h-6 sm:w-7 sm:h-7 object-contain rounded" />
         <h1 className="text-lg sm:text-xl font-bold tracking-tight text-slate-900">
           Job<span className="text-orange-500">Track</span>
         </h1>

@@ -1,5 +1,5 @@
 
-import { Bell, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 
 function Header({ onAddClick }) {
   return (
@@ -14,10 +14,6 @@ function Header({ onAddClick }) {
       </div>
 
       <div className="flex items-center gap-2 sm:gap-3">
-        <button className="p-1.5 rounded-lg text-slate-500 hover:bg-slate-100 transition">
-          <Bell size={18} />
-        </button>
-
         <button
           onClick={onAddClick}
           className="flex items-center gap-1.5 bg-orange-500 hover:bg-orange-600 active:scale-[0.98] text-white px-3 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-medium transition shadow-xs"
